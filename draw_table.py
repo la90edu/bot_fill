@@ -127,7 +127,7 @@ if 'school' in df.columns:
         st.warning("לא נמצאה עמודה בשם 'class' בנתונים - מציג רק לפי בית ספר")
       # הצגת סיכום כללי
     st.subheader("📋 סיכום כללי")
-    col1, col2, col3 = st.columns(3)
+    col1, col2  = st.columns(2             )
     
     with col1:
         st.metric("🏫 סה\"כ בתי ספר", len(school_counts))
@@ -135,9 +135,7 @@ if 'school' in df.columns:
     with col2:
         st.metric("📚 סה\"כ רשומות", len(df))
     
-    with col3:
-        avg_records = len(df) / len(school_counts) if len(school_counts) > 0 else 0
-        st.metric("📊 ממוצע רשומות לבית ספר", f"{avg_records:.1f}")
+
       # הצגת הנתונים המקוריים
     # st.subheader("טבלת הנתונים המלאה")
     # st.dataframe(df, use_container_width=True, hide_index=True)
