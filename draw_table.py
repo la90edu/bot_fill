@@ -5,6 +5,13 @@ import pandas as pd
 # טעינת הנתונים
 df = init.init()
 
+# הגדרת layout רחב לשימוש טוב יותר במסך
+# st.set_page_config(
+#     layout="wide",
+#     page_title="טבלת מעקב נתונים",
+#     page_icon="📊"
+# )
+
 # סינון נתונים - הסרת שורות עם "טסט" בעמודת school
 if 'school' in df.columns:
     df = df[df['school'] != 'טסט']
@@ -57,6 +64,26 @@ st.markdown("""
         font-size: 12px !important;
     }
 }
+    }
+    
+    .stMarkdown h2 {
+        font-size: 1.3rem !important;
+    }
+    
+    .stMarkdown h3 {
+        font-size: 1.1rem !important;
+    }
+    
+    /* שיפור תצוגת מטריקות במובייל */
+    .metric-container {
+        padding: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+}
+
+/* כפיית גלילה אופקית לטבלאות */
+.dataframe-container {
+    }
 </style>
 """, unsafe_allow_html=True)
 
