@@ -5,6 +5,10 @@ import pandas as pd
 # טעינת הנתונים
 df = init.init()
 
+# סינון נתונים - הסרת שורות עם "טסט" בעמודת school
+if 'school' in df.columns:
+    df = df[df['school'] != 'טסט']
+
 # הגדרת CSS עבור עיצוב משופר
 st.markdown("""
 <style>
@@ -44,8 +48,7 @@ if 'school' in df.columns:
     # st.dataframe(school_counts, use_container_width=True, hide_index=True)    # יצירת טבלה משולבת לפי בית ספר וכיתה
     if 'class' in df.columns:
         st.subheader("📈 טבלת מעקב מפורטת - רשומות מלאות וחלקיות")
-        
-        # בדיקה אם קיימת עמודת conversation
+          # בדיקה אם קיימת עמודת conversation
         if 'conversation' in df.columns:
             # יצירת עמודה חדשה לסוג הרשומה
             df['record_type'] = df['conversation'].apply(
@@ -56,6 +59,13 @@ if 'school' in df.columns:
             detailed_counts = df.groupby(['school', 'class', 'record_type']).size().unstack(
                 fill_value=0, level='record_type'
             )
+            
+            # שינוי שמות עמודות כיתות לתצוגה יותר ברורה
+            detailed_counts.index = detailed_counts.index.set_names(['בית ספר', 'כיתה'])
+            if 'class_8' in detailed_counts.index.get_level_values('כיתה'):
+                detailed_counts = detailed_counts.rename(index={'class_8': 'כיתה ח'}, level='כיתה')
+            if 'class_10' in detailed_counts.index.get_level_values('כיתה'):
+                detailed_counts = detailed_counts.rename(index={'class_10': 'כיתה י'}, level='כיתה')
             
             # אם אין עמודות מסוימות, נוסיף אותן עם ערכים של 0
             if '✅ רשומה מלאה' not in detailed_counts.columns:
