@@ -5,6 +5,13 @@ import pandas as pd
 # טעינת הנתונים
 df = init.init()
 
+# הגדרת layout רחב לשימוש טוב יותר במסך
+# st.set_page_config(
+#     layout="wide",
+#     page_title="טבלת מעקב נתונים",
+#     page_icon="📊"
+# )
+
 # סינון נתונים - הסרת שורות עם "טסט" בעמודת school
 if 'school' in df.columns:
     df = df[df['school'] != 'טסט']
@@ -12,6 +19,7 @@ if 'school' in df.columns:
 # הגדרת CSS עבור עיצוב משופר
 st.markdown("""
 <style>
+/* עיצוב כללי */
 .metric-container {
     background-color: #f0f2f6;
     padding: 1rem;
@@ -31,6 +39,54 @@ st.markdown("""
     padding: 0.2rem;
     border-radius: 0.3rem;
     font-weight: bold;
+}
+
+/* עיצוב מותאם למובייל */
+@media (max-width: 768px) {
+    .stDataFrame {
+        overflow-x: auto !important;
+        width: 100% !important;
+    }
+    
+    .stDataFrame > div {
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+    }
+    
+    /* הקטנת גופן בטבלאות במובייל */
+    .stDataFrame table {
+        font-size: 12px !important;
+    }
+    
+    /* הקטנת כותרות */
+    .stMarkdown h1 {
+        font-size: 1.5rem !important;
+    }
+    
+    .stMarkdown h2 {
+        font-size: 1.3rem !important;
+    }
+    
+    .stMarkdown h3 {
+        font-size: 1.1rem !important;
+    }
+    
+    /* שיפור תצוגת מטריקות במובייל */
+    .metric-container {
+        padding: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+}
+
+/* כפיית גלילה אופקית לטבלאות */
+.dataframe-container {
+    overflow-x: auto;
+    width: 100%;
+}
+
+/* סגנון מיוחד לטבלאות רחבות */
+.wide-table {
+    min-width: 600px;
 }
 </style>
 """, unsafe_allow_html=True)
